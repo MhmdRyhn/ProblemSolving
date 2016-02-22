@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+    ll t,a,b;
+    deque<ll> ans;
+
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld%lld",&a,&b);
+
+        printf("Case %lld:",i);
+
+        if(b>=(a-b))
+        {
+            printf(" impossible\n");
+            continue;
+        }
+
+        ll n=a-b;
+
+        for(ll k=(ll)sqrtl(n); k>0; k--)
+            if((n%k)==0)
+            {
+                if(k>b)
+                    ans.push_front(k);
+                if((n/k)>b and k!=(n/k))
+                    ans.push_back(n/k);
+            }
+
+        while(!ans.empty())
+        {
+            printf(" %lld",ans.front());
+            ans.pop_front();
+        }
+
+        printf("\n");
+    }
+
+
+
+    return 0;
+}
