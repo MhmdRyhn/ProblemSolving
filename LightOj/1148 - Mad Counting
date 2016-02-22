@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define mx 51
+
+typedef long long ll;
+
+int main()
+{
+    ll t,n,a;
+
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld",&n);
+        ll x[n];
+
+        for(ll k=0; k<n; k++)
+        {
+            scanf("%lld",&x[k]);
+            x[k]++;
+        }
+
+        ll ans=0;
+        for(ll j=0; j<n; j++)
+        {
+            ll p=x[j];
+            ll cnt=0;
+
+            if(p)
+            {
+                for(ll k=0; k<n; k++)
+                {
+                    if(p==x[k])
+                        cnt++,x[k]=0;
+                }
+
+                ans+=((ll)(cnt/p))*p;
+
+                if(cnt%p)
+                    ans+=p;
+
+                x[j]=0;
+            }
+        }
+
+        printf("Case %lld: %lld\n",i,ans);
+    }
+
+
+
+    return 0;
+}
+
