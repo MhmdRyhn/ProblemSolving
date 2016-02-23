@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mod 1000003
+#define mx 1000001
+
+
+typedef long long ll;
+
+ll f[mx];
+
+ll bigmod(ll b,ll p,ll m)
+{
+    if(p==1)
+        return b%m;
+    else if((p%2)==1)
+        return ((b%m)*(bigmod(b,p/2,m)%m)*(bigmod(b,p/2,m)%m))%m;
+    else
+        return ((bigmod(b,p/2,m)%m)*(bigmod(b,p/2,m)%m))%m;
+}
+
+void fact()
+{
+    for(ll i=1; i<mx; i++)
+        f[i]=(i*f[i-1])%mod;
+}
+
+int main()
+{
+    f[0]=1;
+    fact();
+
+    ll t,n,r;
+
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld%lld",&n,&r);
+        ll invmod=bigmod(f[r]*f[n-r],mod-2,mod);
+
+        ll ans=(f[n]*invmod)%mod;
+
+        printf("Case %lld: %lld\n",i,ans);
+    }
+
+    return 0;
+}
