@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+ll gcd(ll a,ll b)
+{
+    if(a%b==0)
+        return b;
+    else
+        return gcd(b,a%b);
+}
+
+int main()
+{
+    ll t,a,b,c,x;
+
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld%lld%lld",&a,&b,&x);
+
+        ll ans=(a*b)/gcd(a,b);
+
+        if(x%ans==0)
+        {
+            c=x/ans;
+            ll g=gcd(c,ans);
+
+            while(g!=1)
+            {
+                c*=g;
+                ans/=g;
+
+                g=gcd(c,ans);
+            }
+
+            printf("Case %lld: %lld\n",i,c);
+        }
+        else
+            printf("Case %lld: impossible\n",i);
+    }
+
+
+    return 0;
+}
