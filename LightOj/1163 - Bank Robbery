@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef unsigned long long ll;
+
+int main()
+{
+    ll t,n;
+    scanf("%llu",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%llu",&n);
+
+        printf("Case %llu: ",i);
+
+        if(n%9)
+            printf("%llu\n",(n*10)/9);
+        else
+            printf("%llu %llu\n",(n*10)/9-1,(n*10)/9);
+
+    }
+
+
+    return 0;
+}
