@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define pii pair<int,int>
+
+typedef long long ll;
+
+vector<int> prime;
+bool x[101];
+
+void sieve()
+{
+    for(int i=4; i<101; i+=2)
+        x[i]=true;
+
+    for(int i=3; i*i<101; i+=2)
+    {
+        if(!x[i])
+            for(int k=i*i; k<101; k+=2*i)
+                x[k]=true;
+    }
+}
+
+int main()
+{
+    int t,n;
+    vector<pii> ans;
+    sieve();
+
+    for(int i=2; i<101; i++)
+        if(!x[i])
+            prime.push_back(i);
+
+    scanf("%d",&t);
+
+    for(int i=1; t--; i++)
+    {
+        scanf("%d",&n);
+
+        ans.clear();
+
+        for(int j=0; j<prime.size(); j++)
+        {
+            int p=0,m=n;
+
+            while(m)
+            {
+                p+=m/prime[j];
+                m/=prime[j];
+            }
+
+            if(p)
+                ans.push_back({prime[j],p});
+
+        }
+
+        printf("Case %d: %d =",i,n);
+
+        for(int j=0; j<ans.size(); j++)
+        {
+            if(j)
+                printf(" *");
+
+            printf(" %d (%d)",ans[j].first,ans[j].second);
+        }
+        printf("\n");
+    }
+
+
+    return 0;
+}
