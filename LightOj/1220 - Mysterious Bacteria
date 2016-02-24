@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+    //freopen("light.txt","r",stdin);
+
+    ll t,x;
+
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld",&x);
+        ll y=x;
+        x=abs(x);
+
+        bool flag=false;
+
+        if(x==1)
+        {
+            printf("Case %lld: 1\n",i);
+            continue;
+        }
+
+        ll p=(ll)(1l<<16);
+        for(ll k=2; k<=p and k<=x; k++)
+        {
+            ll r=(ll)((double)log((double)x)/(double)log((double)k));
+
+            ++r;
+
+            ll ans=1;
+            for(ll j=1; j<=r; j++)
+            {
+                ans*=k;
+                if(ans==x and ((y<0 and j%2) or (y>=0)))
+                {
+                    printf("Case %lld: %lld\n",i,j);
+                    flag=true;
+                    break;
+                }
+            }
+
+            if(flag)
+                break;
+        }
+        if(flag)
+            continue;
+        else
+            printf("Case %lld: 1\n",i);
+    }
+
+
+    return 0;
+}
