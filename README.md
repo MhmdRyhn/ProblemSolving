@@ -1,3 +1,3 @@
-# Programming-Sloution
+# Programming Sloution
 
-Here are all my solved problems from different Online Judges.
+Here are ACCEPTED solution of some Problems from different Online Judges.
