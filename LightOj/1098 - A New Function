@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+    ll t,n;
+
+    scanf("%lld",&t);
+
+    for(ll i=1;t--;i++)
+    {
+        scanf("%lld",&n);
+
+        ll p=sqrtl((double)n),ans=0;
+
+        for(ll k=2;k<=p;k++)
+        {
+            ll d=(ll)(n/k);
+            ans+=(d-(k-1))*k+(d*(d+1))/2-(k*(k+1))/2;
+        }
+
+        printf("Case %lld: %lld\n",i,ans);
+    }
+
+
+    return 0;
+}
