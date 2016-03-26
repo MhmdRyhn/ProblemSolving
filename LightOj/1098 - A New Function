@@ -23,7 +23,7 @@ int main()
 
         printf("Case %lld: %lld\n",i,ans);
     }
-
+    
 
     return 0;
 }
