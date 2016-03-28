@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mx 10000001
+
+typedef long long ll;
+
+bool p[mx];
+vector<ll> prime;
+
+void f()
+{
+    for(ll i=4;i<mx;i+=2)
+        p[i]=true;
+
+    for(ll i=3;i*i<mx;i+=2)
+        if(!p[i])
+        for(ll k=i*i;k<=mx;k+=2*i)
+            p[k]=true;
+
+    prime.push_back(2);
+    for(ll i=3;i<mx;i+=2)
+        if(!p[i])
+        prime.push_back(i);
+}
+
+int main()
+{
+    f();
+    ll t,n;
+
+    scanf("%lld",&t);
+
+    for(ll i=1;t--;i++)
+    {
+        scanf("%lld",&n);
+
+        ll len=prime.size(),cnt=0;
+        for(ll k=0;prime[k]<=(n-prime[k]);k++)
+        {
+            if(!p[n-prime[k]])
+                cnt++;
+        }
+
+        printf("Case %lld: %lld\n",i,cnt);
+
+    }
+
+
+    return 0;
+}
