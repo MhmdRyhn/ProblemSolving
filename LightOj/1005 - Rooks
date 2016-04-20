@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+ll ncr[31][31];
+
+void det()
+{
+    ncr[0][0]=1;
+    for(ll i=1; i<31; i++)
+        ncr[i][0]=1;
+
+    for(ll i=1; i<31; i++)
+        for(ll k=1; k<=i; k++)
+            ncr[i][k]=ncr[i-1][k]+ncr[i-1][k-1];
+}
+
+int main()
+{
+    ll t,n,k;
+
+    det();
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld%lld",&n,&k);
+        printf("Case %lld: ",i);
+
+        if(k>n)
+        {
+            printf("0\n");
+            continue;
+        }
+
+        ll p=n-k,ans=ncr[n][k];
+        for(ll j=n; j>p; j--)
+            ans*=j;
+
+        printf("%lld\n",ans);
+    }
+
+
+    return 0;
+}
