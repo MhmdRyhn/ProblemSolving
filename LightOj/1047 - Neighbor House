@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+ll col[20][3];
+
+ll paint(ll n,ll i)
+{
+
+    if(i==n)
+        return min(col[n-1][0],min(col[n-1][1],col[n-1][2]));
+    col[i][0]+=min(col[i-1][1],col[i-1][2]);
+    col[i][1]+=min(col[i-1][0],col[i-1][2]);
+    col[i][2]+=min(col[i-1][1],col[i-1][0]);
+
+    paint(n,i+1);
+}
+
+int main()
+{
+    ll t,n;
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld",&n);
+
+        for(ll k=0; k<n; k++)
+            scanf("%lld%lld%lld",&col[k][0],&col[k][1],&col[k][2]);
+
+        printf("Case %lld: %lld\n",i,paint(n,0));
+    }
+
+
+    return 0;
+}
+
