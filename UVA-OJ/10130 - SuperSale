@@ -1,0 +1,59 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+#define mx 1002
+
+typedef long long ll;
+
+ll cost[mx],weight[mx];
+ll cap,n;
+ll dp[mx][32];
+
+
+ll knapsack(ll i,ll w)
+{
+    if(i==n)
+        return 0;
+    if(dp[i][w]!=-1)
+        return dp[i][w];
+
+    ll prof1=0,prof2=0;
+    if(w+weight[i]<=cap)
+        prof1=cost[i]+knapsack(i+1,w+weight[i]);
+    prof2=knapsack(i+1,w);
+
+    dp[i][w]=max(prof1,prof2);
+
+    return dp[i][w];
+}
+
+int main()
+{
+    ll t,g;
+
+    scanf("%lld",&t);
+
+    while(t--)
+    {
+        scanf("%lld",&n);
+
+        for(ll i=0;i<n;i++)
+            scanf("%lld%lld",cost+i,weight+i);
+
+        scanf("%lld",&g);
+        ll ans=0;
+        while(g--)
+        {
+            scanf("%lld",&cap);
+
+            memset(dp,-1,sizeof (dp));
+            ans+=knapsack(0,0);
+        }
+
+        printf("%lld\n",ans);
+    }
+
+
+    return 0;
+}
+
