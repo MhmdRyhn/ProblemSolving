@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define nl printf("\n")
+
+typedef long long ll;
+
+ll weight[205];
+ll dp[205][105];
+ll cap,n;
+
+
+ll knapsack(ll i,ll w)
+{
+    if(i==n)
+        return 0;
+    if(dp[i][w]!=-1)
+        return dp[i][w];
+
+    ll p1=0,p2=0;
+
+    if(w+weight[i]<=cap)
+        p1=weight[i]+knapsack(i+1,w+weight[i]);
+    p2=knapsack(i+1,w);
+
+    dp[i][w]=max(p1,p2);
+
+    return dp[i][w];
+}
+
+int main()
+{
+    ll t;
+    scanf("%lld",&t);
+
+    char s[500];
+    getchar();
+    while(t--)
+    {
+        gets(s);
+
+        ll j=0,len=strlen(s),p=0,tot=0;
+        for(ll i=0; i<len; i++)
+        {
+            if(s[i]==' ')
+            {
+                tot+=p;
+                weight[j]=p;
+                p=0;
+                j++;
+            }
+            else
+                p=p*10+(s[i]-'0');
+
+            if(i==len-1)
+                weight[j]=p,j++,tot+=p;
+        }
+        n=j;
+
+
+        if(tot%2)
+            printf("NO\n");
+        else
+        {
+            cap=tot/2;
+
+            for(ll i=0; i<n; i++)
+                for(ll j=0; j<=cap; j++)
+                    dp[i][j]=-1;
+
+            if(knapsack(0,0)==cap)
+                printf("YES\n");
+            else
+                printf("NO\n");
+        }
+
+    }
+
+
+    return 0;
+}
