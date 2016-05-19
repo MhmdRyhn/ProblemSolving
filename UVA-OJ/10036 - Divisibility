@@ -1,0 +1,65 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+#define mx 10005
+typedef long long ll;
+
+ll dp[mx][105];
+ll data[mx];
+ll n,d;
+
+ll mod(ll a,ll k)
+{
+    return ((k+a%k)%k);
+}
+
+ll knapsack(ll i,ll s)
+{
+    s=mod(s,d);
+
+    if(i==n)
+    {
+        if(s==0)
+            return 1;
+        return 0;
+    }
+    if(dp[i][s]!=-2)
+        return dp[i][s];
+
+    ll chk=0;
+    chk=chk | knapsack(i+1,s+data[i]);
+    chk=chk | knapsack(i+1,s-data[i]);
+
+    dp[i][s]=chk;
+
+    return dp[i][s];
+
+}
+
+
+int main()
+{
+    //freopen("uva.txt","r",stdin);
+
+    ll t;
+    scanf("%lld",&t);
+
+    while(t--)
+    {
+        scanf("%lld%lld",&n,&d);
+        for(ll i=0; i<n; i++)
+            scanf("%lld",data+i);
+
+        for(ll i=0; i<n; i++)
+            for(ll j=0; j<d; j++)
+                dp[i][j]=-2;
+
+        ll ans=knapsack(1,data[0]);
+        printf("%s\n",ans ? "Divisible":"Not divisible");
+
+    }
+
+
+    return 0;
+}
+
