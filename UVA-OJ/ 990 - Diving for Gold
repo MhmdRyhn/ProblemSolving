@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mx 31
+
+typedef long long ll;
+
+ll n,t;
+ll cost[mx],weight[mx];
+ll dp[mx][1001],dir[mx][1001];
+ll dive[mx];
+
+ll knapsack(ll i,ll w)
+{
+    if(i==n)
+        return 0;
+    if(dp[i][w]!=-1)
+        return dp[i][w];
+
+    ll prof1=0,prof2=0;
+
+    if((w+weight[i])<=t)
+        prof1=cost[i]+knapsack(i+1,w+weight[i]);
+    prof2=knapsack(i+1,w);
+
+    dir[i][w]=(prof1>prof2)? 1:0;
+    dp[i][w]=max(prof1,prof2);
+    return dp[i][w];
+
+
+}
+
+
+int main()
+{
+    //freopen("uva.txt","r",stdin);
+
+    ll x;
+    bool a=false;
+
+    while(scanf("%lld %lld",&t,&x)==2)
+    {
+        if(a)
+            printf("\n");
+        a=true;
+
+        scanf("%lld",&n);
+
+        for(ll i=0; i<n; i++)
+        {
+            scanf("%lld %lld",weight+i,cost+i);
+            weight[i]=weight[i]*3*x;
+        }
+
+        for(ll i=0; i<n; i++)
+        {
+            for(ll j=0; j<=t; j++)
+            {
+                dp[i][j]=-1;
+                dir[i][j]=0;
+            }
+            dive[i]=0;
+        }
+
+        ll ans=knapsack(0,0);
+
+        ll p=0,cnt=0;
+        for(ll i=0; i<n; i++)
+        {
+            if(dir[i][p])
+            {
+                cnt++;
+                p+=weight[i];
+                dive[i]=1;
+            }
+        }
+
+        printf("%lld\n%lld\n",ans,cnt);
+
+        for(ll i=0; i<n; i++)
+            if(dive[i])
+                printf("%lld %lld\n",weight[i]/3/x,cost[i]);
+
+    }
+
+    return 0;
+}
