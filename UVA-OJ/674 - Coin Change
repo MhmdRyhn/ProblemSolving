@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+ll cap,n;
+ll coin[]={1,5,10,25,50};
+ll dp[10][7500];
+
+ll change(ll i,ll t)
+{
+    if(i>=n)
+        return 0;
+    if(t==0)
+        return 1;
+    if(dp[i][t]!=-1)
+        return dp[i][t];
+
+    ll p1=0,p2=0;
+    if(coin[i]<=t)
+        p1=change(i,t-coin[i]);
+    p2=change(i+1,t);
+
+    return dp[i][t]=p1+p2;
+}
+
+
+int main()
+{
+    n=5;
+
+    memset(dp,-1,sizeof dp);
+    while(scanf("%lld",&cap)!=EOF)
+        printf("%lld\n",change(0,cap));
+
+
+    return 0;
+}
