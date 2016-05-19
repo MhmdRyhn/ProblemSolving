@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mx 1121
+typedef long long ll;
+
+
+bool prime[mx];
+ll data[mx];
+ll dp[mx][mx][15];
+ll cap,n,k;
+
+void pr()
+{
+    for(ll i=4; i<mx; i+=2)
+        prime[i]=true;
+
+    for(ll i=3; i*i<mx; i+=2)
+        for(ll j=i*i; j<mx; j+=2*i)
+            prime[j]=true;
+
+    for(ll i=2,j=0; i<mx; i++)
+        if(!prime[i])
+            data[j]=i,j++;
+}
+
+
+ll sol(ll i,ll s,ll c)
+{
+    if(c==k)
+    {
+        if(s==cap)
+            return 1;
+        return 0;
+    }
+    if(s>cap or i==n or c>k)
+        return 0;
+    if(dp[i][s][c]!=-1)
+        return dp[i][s][c];
+
+    dp[i][s][c]=sol(i+1,s,c)+sol(i+1,s+data[i],c+1);
+
+    return dp[i][s][c];
+}
+
+
+
+int main()
+{
+    pr();
+
+    while(scanf("%lld%lld",&cap,&k) and (cap or k))
+    {
+        for(ll r=0; data[r]<=cap and data[r]; r++)
+            n=r+1;
+
+        for(ll i=0; i<n; i++)
+            for(ll j=0; j<=cap; j++)
+                for(ll a=0; a<=k; a++)
+                    dp[i][j][a]=-1;
+
+        ll ans=sol(0,0,0);
+
+        printf("%lld\n",ans);
+
+    }
+
+
+
+    return 0;
+}
