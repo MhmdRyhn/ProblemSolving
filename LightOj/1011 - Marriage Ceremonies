@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+
+ll v[16][16];
+ll dp[16][(1<<16)+5];
+ll n;
+
+ll f(ll i, ll m)
+{
+    if(i>=n)
+        return 0;
+
+    if(dp[i][m]==-1)
+    {
+        for(ll j=0; j<n; j++)
+            if((m & (1<<j))==0)
+                dp[i][m]=max(dp[i][m],v[i][j]+f(i+1,m|(1<<j)));
+    }
+
+    return dp[i][m];
+}
+
+
+int main()
+{
+    ll t;
+    scanf("%lld",&t);
+
+    for(ll i=1; t--; i++)
+    {
+        scanf("%lld",&n);
+
+        for(ll i=0; i<n; i++)
+            for(ll j=0; j<n; j++)
+                scanf("%lld",&v[i][j]);
+
+        memset(dp,-1,sizeof dp);
+
+        printf("Case %lld: %lld\n",i,f(0,0));
+
+    }
+
+    return 0;
+}
