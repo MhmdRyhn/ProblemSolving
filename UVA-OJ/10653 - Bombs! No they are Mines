@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define x first
+#define y second
+
+typedef long long ll;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    ll mx[]={1,-1,0,0},my[]={0,0,1,-1};
+
+    ll r,c,n,rw,nc,clm;
+
+    while(scanf("%lld%lld",&r,&c))
+    {
+        if(r==0 and c==0)
+            break;
+
+        bool bomb[r][c];
+        ll vis[r][c];
+        for(ll i=0;i<r;i++)
+            for(ll j=0;j<c;j++)
+            bomb[i][j]=false,vis[i][j]=0;
+
+        scanf("%lld",&n);
+        for(ll i=0;i<n;i++)
+        {
+            scanf("%lld%lld",&rw,&nc);
+
+            for(ll j=0;j<nc;j++)
+            {
+                scanf("%lld",&clm);
+                bomb[rw][clm]=true;
+            }
+
+        }
+
+        ll sx,sy,dx,dy;
+        scanf("%lld%lld",&sx,&sy);
+        scanf("%lld%lld",&dx,&dy);
+
+        queue< pair<ll,ll> > q;
+
+        q.push({sx,sy});
+        vis[sx][sy]=0;
+
+        while(!q.empty() and !vis[dx][dy])
+        {
+            pair<ll,ll> u=q.front();
+            ll ux=u.x,uy=u.y;
+            q.pop();
+
+            for(ll i=0;i<4;i++)
+            {
+                ll vx=ux+mx[i],vy=uy+my[i];
+                if(vx>=0 and vx<r and vy>=0 and vy<c)
+                    if(!bomb[vx][vy] and !vis[vx][vy])
+                {
+                    vis[vx][vy]=vis[ux][uy]+1;
+                    q.push({vx,vy});
+                }
+            }
+
+        }
+
+        cout<<vis[dx][dy]<<endl;
+
+    }
+
+
+
+
+
+    return 0;
+}
+
