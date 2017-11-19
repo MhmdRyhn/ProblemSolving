@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+    //freopen("uva.txt","r",stdin);
+
+    ll p,n;
+    ll globe=1;
+
+    while(scanf("%lld",&n))
+    {
+        if(n==0)
+            break;
+
+        ll a,b;
+        map<ll, vector<ll> > g;
+
+
+        for(ll i=0;i<n;i++)
+        {
+            scanf("%lld%lld",&a,&b);
+            g[a].push_back(b);
+            g[b].push_back(a);
+        }
+
+        while(scanf("%lld%lld",&a,&b))
+        {
+            if(!a and !b)
+                break;
+
+            queue<ll> q;
+            map<ll,ll> vis;
+
+            if(g.find(a)==g.end())
+            {
+                printf("Case %lld: %lld nodes not reachable from node %lld with TTL = %lld.\n",globe,(ll)g.size(),a,b);
+                globe++;
+                continue;
+            }
+
+            q.push(a);
+            vis[a]=b;
+
+            while(!q.empty())
+            {
+                ll u=q.front();
+                q.pop();
+                vector<ll> w=g[u];
+
+                if(vis[u]>0)
+                for(ll i=0;i<w.size();i++)
+                {
+                    ll v=w[i];
+                    if(vis.find(v)==vis.end())
+                    {
+                        vis[v]=vis[u]-1;
+                        q.push(v);
+                    }
+                }
+            }
+
+            ll nr=g.size()-vis.size();
+            //printf("g: %lld  vis: %lld\n",(ll)g.size(),(ll)vis.size());
+            //if(globe!=1)
+            //printf("\n");
+            printf("Case %lld: %lld nodes not reachable from node %lld with TTL = %lld.\n",globe,nr,a,b);
+            globe++;
+        }
+
+    }
+
+
+
+    return 0;
+}
+
