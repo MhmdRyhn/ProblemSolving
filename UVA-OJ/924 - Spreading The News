@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+    ll p,n,a;
+    scanf("%lld",&p);
+
+    vector<ll> frnd[p];
+    for(ll i=0; i<p; i++)
+    {
+        scanf("%lld",&n);
+
+        for(ll j=0; j<n; j++)
+        {
+            scanf("%lld",&a);
+            frnd[i].push_back(a);
+        }
+    }
+
+    ll t;
+    scanf("%lld",&t);
+
+    while(t--)
+    {
+        scanf("%lld",&a);
+
+        ll viscnt[p],cnt[p];
+        bool vis[p];
+        for(ll j=0; j<p; j++)
+            viscnt[j]=0,vis[j]=false,cnt[j]=0;
+
+        queue<ll> q;
+
+        q.push(a);
+        vis[a]=true;
+        viscnt[a]=0;
+
+
+        while(!q.empty())
+        {
+            ll u=q.front();
+            q.pop();
+
+            for(ll i=0; i<frnd[u].size(); i++)
+            {
+                ll v=frnd[u][i];
+                if(!vis[v])
+                {
+                    viscnt[v]=viscnt[u]+1;
+                    vis[v]=true;
+                    q.push(v);
+                }
+            }
+
+        }
+
+
+        for(ll i=0; i<p; i++)
+            cnt[viscnt[i]]++;
+
+
+        ll m=0,d=-1;
+        for(ll i=1; i<p; i++)
+        {
+            if(cnt[i]>m)
+                m=cnt[i],d=i;
+        }
+
+        printf("%lld",m);
+        if(d>=0)
+            printf(" %lld",d);
+        printf("\n");
+
+    }
+
+
+    return 0;
+}
