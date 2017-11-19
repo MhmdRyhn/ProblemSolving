@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+
+
+    ios_base::sync_with_stdio(false);
+
+    ll n;
+    cin>>n;
+
+    while(n--)
+    {
+        string p,ws;
+        vector<string> words;
+
+        while((cin>>ws) and ws!="*")
+            words.push_back(ws);
+
+
+        cin.ignore();
+        while(getline(cin,p) and p!="")
+        {
+            stringstream ss(p);
+            string s,d;
+            ss>>s>>d;
+
+            ///bfs
+            queue<string> q;
+            map<string,ll> cnt;
+
+            cnt[s]=0;
+            q.push(s);
+
+            while(!q.empty() and cnt.count(d)==0)
+            {
+                string u=q.front();
+                q.pop();
+
+                for(ll i=0;i<words.size();i++)
+                {
+                    ll dif=0;
+                    string v=words[i];
+
+                    if((!cnt.count(v)) and u.length()==v.length())
+                        for(ll j=0;j<v.length();j++)
+                            if(u[j]!=v[j])
+                            dif++;
+
+                    if(dif==1)
+                    {
+                        cnt[v]=cnt[u]+1;
+                        q.push(v);
+                    }
+
+                }
+            }
+
+            cout<<s<<" "<<d<<" "<<cnt[d]<<endl;
+
+        }
+        if(n)
+            cout<<endl;
+
+
+    }
+
+
+
+    return 0;
+}
