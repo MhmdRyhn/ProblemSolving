@@ -39,10 +39,55 @@ public:
 };
 
 
+class Solution2
+{
+public:
+    string convert(string s, int numRows)
+    {
+        string toReturn = "";
+        int strLen = s.length();
+        int maxDiff = (numRows-1)*2;
+
+        if(numRows == 1 or numRows >= strLen)
+            return s;
+
+        for(int row=0; row<numRows; row++)
+        {
+            if(row == 0 or row == (numRows-1))
+            {
+                for(int i=row; i<strLen; i+=maxDiff)
+                    toReturn += s[i];
+            }
+            else
+            {
+                int i = row;
+                toReturn += s[i];
+                while(true)
+                {
+                    int second = 2*row;
+                    int first = maxDiff - second;
+
+                    i += first;
+                    if(i >= strLen)
+                        break;
+                    toReturn += s[i];
+                    i += second;
+                    if(i >= strLen)
+                        break;
+                    toReturn += s[i];
+                }
+            }
+        }
+        return toReturn;
+    }
+};
+
+
 int main()
 {
-    Solution obj;
+    Solution2 obj;
     string ans = obj.convert("PAYPALISHIRING", 3);
+    cout<<"\""<<ans<<"\""<<endl;
     string correct = "PAHNAPLSIIGYIR";
     if(ans == correct)
         cout<<"Correct";
