@@ -1,0 +1,9 @@
+# The following link describes the ignoring strategy
+# https://stackoverflow.com/a/19023985/5600965
+
+*
+!/**/
+!*.cpp
+!*.py
+
+
