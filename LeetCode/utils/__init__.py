@@ -1,1 +1,1 @@
-from utils_linked_list import create_singly_link_list
+from LeetCode.utils.utils_linked_list import create_singly_link_list
